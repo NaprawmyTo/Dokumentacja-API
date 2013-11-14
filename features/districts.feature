@@ -20,9 +20,15 @@ Feature: Scenarios for districts api endpoint
       | Bar District > Broken window   |
       | Tar District > Broken lights   |
     And there are following users defined:
-      | id   | username | email              |
-      | 1324 | konrad   | konrad@example.com |
-      | 2424 | piotr    | piotr@example.com  |
+      | id   | username | password | email              |
+      | 1324 | konrad   | KPASS    | konrad@example.com |
+      | 2424 | piotr    | PPASS    | piotr@example.com  |
+    And users have following refresh tokens:
+      | konrad > KONRAD_REFRESH_TOKEN_1 |
+      | piotr > PIOTR_REFRESH_TOKEN_1   |
+    And users have following access tokens:
+      | konrad > KONRAD_ACCESS_TOKEN_1 |
+      | piotr > PIOTR_ACCESS_TOKEN_1   |
 
   Scenario Outline: Fetch information about district
     Given I am not authenticated user

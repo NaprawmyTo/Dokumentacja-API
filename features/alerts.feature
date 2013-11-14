@@ -20,9 +20,15 @@ Feature: Scenarios for alerts api endpoint
       | Bar District > Broken window   |
       | Tar District > Broken lights   |
     And there are following users defined:
-      | id   | username | email              |
-      | 1324 | konrad   | konrad@example.com |
-      | 2424 | piotr    | piotr@example.com  |
+      | id   | username | password | email              |
+      | 1324 | konrad   | KPASS    | konrad@example.com |
+      | 2424 | piotr    | PPASS    | piotr@example.com  |
+    And users have following refresh tokens:
+      | konrad > KONRAD_REFRESH_TOKEN_1 |
+      | piotr > PIOTR_REFRESH_TOKEN_1   |
+    And users have following access tokens:
+      | konrad > KONRAD_ACCESS_TOKEN_1 |
+      | piotr > PIOTR_ACCESS_TOKEN_1   |
     And there are following alerts defined:
       | id | long | lat  | description                                                 |
       | 1  | 19.5 | 50.5 | There is a big hole in the middle of nowhere (Tar District) |
@@ -65,10 +71,10 @@ Feature: Scenarios for alerts api endpoint
     Then the response status code is "<status_code>"
 
   Examples:
-    | username | access_token | long | lat  | district_id | description                                    | status_code |
-    | konrad   | XXX          | 21   | 52   | 43          | First alert in Foo district                    | 201         |
-    | konrad   | XXX          | 21.5 | 51.5 | 43          | Second alert in Foo district                   | 201         |
-    | konrad   | XXX          | 21.5 | 51.5 | 999         | Alert in district that doesn't exist in system | 400         |
+    | username | access_token          | long | lat  | district_id | description                                    | status_code |
+    | konrad   | KONRAD_ACCESS_TOKEN_1 | 21   | 52   | 43          | First alert in Foo district                    | 201         |
+    | konrad   | KONRAD_ACCESS_TOKEN_1 | 21.5 | 51.5 | 43          | Second alert in Foo district                   | 201         |
+    | konrad   | KONRAD_ACCESS_TOKEN_1 | 21.5 | 51.5 | 999         | Alert in district that doesn't exist in system | 400         |
 
 
   Scenario Outline: Fetch information about an Alert

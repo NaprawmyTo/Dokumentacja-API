@@ -1,5 +1,17 @@
 Feature: Authenticating with api
 
+  Background:
+    Given there are following users defined:
+      | id   | username | password | email              |
+      | 1324 | konrad   | KPASS    | konrad@example.com |
+      | 2424 | piotr    | PPASS    | piotr@example.com  |
+    And users have following refresh tokens:
+      | konrad > KONRAD_REFRESH_TOKEN_1 |
+      | piotr > PIOTR_REFRESH_TOKEN_1   |
+    And users have following access tokens:
+      | konrad > KONRAD_ACCESS_TOKEN_1 |
+      | piotr > PIOTR_ACCESS_TOKEN_1   |
+
   Scenario Outline: Fetch new access token using username and password
     Given that I am not using cookies
     And that there is an account with username "<username>" and password "<password>"
@@ -13,8 +25,8 @@ Feature: Authenticating with api
       | <access_token> | <expires_in> | <refresh_token> |
 
   Examples:
-    | username | password | access_token | expires_in | refresh_token |
-    | konrad   | XXXX     | YYYY         | 3600       | ZZZZ          |
+    | username | password | access_token          | expires_in | refresh_token          |
+    | konrad   | KPASS    | KONRAD_ACCESS_TOKEN_1 | 3600       | KONRAD_REFRESH_TOKEN_1 |
 
 
   Scenario Outline: Fetch new access token using refresh token
@@ -29,13 +41,12 @@ Feature: Authenticating with api
       | <access_token> | <expires_in> | <refresh_token> |
 
   Examples:
-    | username | password | access_token | expires_in | refresh_token |
-    | konrad   | XXXX     | YYY1         | 3600       | ZZZ1          |
-    | piotr    | XXXX     | YYY2         | 3600       | ZZZ2          |
-
+    | username | password | access_token          | expires_in | refresh_token          |
+    | konrad   | KPASS    | KONRAD_ACCESS_TOKEN_1 | 3600       | KONRAD_REFRESH_TOKEN_1 |
+    | piotr    | PPASS    | PIOTR_REFRESH_TOKEN_1 | 3600       | PIOTR_REFRESH_TOKEN_1  |
 
   Scenario: Passing both password and refresh toke at the same time
-    One shouldn't pass both password and refresh_token in the same request
+  One shouldn't pass both password and refresh_token in the same request
     Given that I am not using cookies
     And that there is an account with username "konrad" and password "XXXX"
     And that I want to make a new request
