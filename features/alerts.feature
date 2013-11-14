@@ -45,9 +45,10 @@ Feature: Scenarios for alerts api endpoint
     | 21.5 | 51.5 | 999         | Alert in district that doesn't exist in system  | 400         |
     | 19.5 | 41.5 | 43          | Alert that is located outside of given district | 400         |
 
-  Scenario Outline: Adding new alert as authenticated user
-    Given that I am authenticated as "konrad"
+  Scenario Outline: Adding new alert as user
+    Given that I have valid access token "<access_token>" assigned to user "<username>"
     And that I want to make a new "Alert"
+    And that its parameter "access_token" is "<access_token>"
     And that its parameter "long" is "<long>"
     And that its parameter "lat" is "<lat>"
     And that its parameter "district_id" is "<district_id>"
@@ -56,8 +57,8 @@ Feature: Scenarios for alerts api endpoint
     Then the response status code is "<status_code>"
 
   Examples:
-    | long | lat  | district_id | description                                    | status_code |
-    | 21   | 52   | 43          | First alert in Foo district                    | 201         |
-    | 21.5 | 51.5 | 43          | Second alert in Foo district                   | 201         |
-    | 21.5 | 51.5 | 999         | Alert in district that doesn't exist in system | 400         |
+    | username | access_token | long | lat  | district_id | description                                    | status_code |
+    | konrad   | XXX          | 21   | 52   | 43          | First alert in Foo district                    | 201         |
+    | konrad   | XXX          | 21.5 | 51.5 | 43          | Second alert in Foo district                   | 201         |
+    | konrad   | XXX          | 21.5 | 51.5 | 999         | Alert in district that doesn't exist in system | 400         |
 
