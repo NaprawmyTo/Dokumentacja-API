@@ -38,12 +38,12 @@ Feature: Scenarios for districts api endpoint
     | 72 | Bar District | 200         |
 
   Scenario: Fetch information about district that doesn't exist
-    Given I am not authenticated user
+    Given that I am not using cookies
     When I request "/api/v3/districts/999" using "GET" method
     Then the response status code is "404"
     And the response body is empty
 
-  Scenario Outline: Fetch categories from given District
+  Scenario Outline: Fetch information about District categories
     When I request "/api/v3/districts/<district_id>/categories" using "GET" method
     Then the response status code is "200"
     And the response body should contain "<categories_count>" categories

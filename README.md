@@ -2,6 +2,8 @@
 
 Wstępny draft struktury api w wersji 3
 
+Specyfikacja jest przygotowania z użyciem składni Gherkin
+
 #/api/v3/districts
 
 ## GET /api/v3/districts/{district_id}
